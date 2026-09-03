@@ -15,6 +15,7 @@ import { Route as DashboardRouteImport } from './routes/dashboard'
 import { Route as ResetPasswordRouteImport } from './routes/reset-password'
 import { Route as AdminIndexRouteImport } from './routes/admin/index'
 import { Route as LeadsIndexRouteImport } from './routes/leads.index'
+import { Route as LeadsNewRouteImport } from './routes/leads.new'
 import { Route as AdminUsersIndexRouteImport } from './routes/admin/users.index'
 import { Route as AdminUsersNewRouteImport } from './routes/admin/users.new'
 
@@ -48,6 +49,11 @@ const LeadsIndexRoute = LeadsIndexRouteImport.update({
   path: '/leads/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const LeadsNewRoute = LeadsNewRouteImport.update({
+  id: '/leads/new',
+  path: '/leads/new',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const AdminUsersIndexRoute = AdminUsersIndexRouteImport.update({
   id: '/users/',
   path: '/users/',
@@ -64,6 +70,7 @@ export interface FileRoutesByFullPath {
   '/admin': typeof AdminRouteWithChildren
   '/dashboard': typeof DashboardRoute
   '/reset-password': typeof ResetPasswordRoute
+  '/leads/new': typeof LeadsNewRoute
   '/admin/': typeof AdminIndexRoute
   '/leads/': typeof LeadsIndexRoute
   '/admin/users/new': typeof AdminUsersNewRoute
@@ -73,6 +80,7 @@ export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/dashboard': typeof DashboardRoute
   '/reset-password': typeof ResetPasswordRoute
+  '/leads/new': typeof LeadsNewRoute
   '/admin': typeof AdminIndexRoute
   '/leads': typeof LeadsIndexRoute
   '/admin/users/new': typeof AdminUsersNewRoute
@@ -84,6 +92,7 @@ export interface FileRoutesById {
   '/admin': typeof AdminRouteWithChildren
   '/dashboard': typeof DashboardRoute
   '/reset-password': typeof ResetPasswordRoute
+  '/leads/new': typeof LeadsNewRoute
   '/admin/': typeof AdminIndexRoute
   '/leads/': typeof LeadsIndexRoute
   '/admin/users/new': typeof AdminUsersNewRoute
@@ -96,6 +105,7 @@ export interface FileRouteTypes {
     | '/admin'
     | '/dashboard'
     | '/reset-password'
+    | '/leads/new'
     | '/admin/'
     | '/leads/'
     | '/admin/users/new'
@@ -105,6 +115,7 @@ export interface FileRouteTypes {
     | '/'
     | '/dashboard'
     | '/reset-password'
+    | '/leads/new'
     | '/admin'
     | '/leads'
     | '/admin/users/new'
@@ -115,6 +126,7 @@ export interface FileRouteTypes {
     | '/admin'
     | '/dashboard'
     | '/reset-password'
+    | '/leads/new'
     | '/admin/'
     | '/leads/'
     | '/admin/users/new'
@@ -126,6 +138,7 @@ export interface RootRouteChildren {
   AdminRoute: typeof AdminRouteWithChildren
   DashboardRoute: typeof DashboardRoute
   ResetPasswordRoute: typeof ResetPasswordRoute
+  LeadsNewRoute: typeof LeadsNewRoute
   LeadsIndexRoute: typeof LeadsIndexRoute
 }
 
@@ -173,6 +186,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof LeadsIndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/leads/new': {
+      id: '/leads/new'
+      path: '/leads/new'
+      fullPath: '/leads/new'
+      preLoaderRoute: typeof LeadsNewRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/admin/users/': {
       id: '/admin/users/'
       path: '/users'
@@ -209,6 +229,7 @@ const rootRouteChildren: RootRouteChildren = {
   AdminRoute: AdminRouteWithChildren,
   DashboardRoute: DashboardRoute,
   ResetPasswordRoute: ResetPasswordRoute,
+  LeadsNewRoute: LeadsNewRoute,
   LeadsIndexRoute: LeadsIndexRoute,
 }
 export const routeTree = rootRouteImport
