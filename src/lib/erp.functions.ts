@@ -155,3 +155,47 @@ export const resetUserPassword = createServerFn({ method: "POST" })
     await supabaseAdmin.from("profiles").update({ must_reset_password: true }).eq("id", data.id);
     return { ok: true };
   });
+
+/** Admin edit of an existing user: name, email, designation and optional new password. */
+export const updateUser = createServerFn({ method: "POST" })
+  .middleware([requireSupabaseAuth])
+  .inputValidator((data: unknown) =>
+    z
+      .object({
+        id: z.string().uuid(),
+        full_name: z.string().min(2).max(120),
+        email: z.string().email(),
+        designation: z.enum(DESIGNATIONS),
+        password: z.string().min(6).max(72).optional().or(z.literal("")),
+      })
+      .parse(data),
+  )
+  .handler(async ({ data, context }) => {
+    await assertAdmin(context.supabase, context.userId);
+    const { supabaseAdmin } = await import("@/integrations/supabase/client.server");
+
+    const authUpdate: { email: string; password?: string } = { email: data.email };
+    if (data.password) authUpdate.password = data.password;
+    const { error: authError } = await supabaseAdmin.auth.admin.updateUserById(data.id, authUpdate);
+    if (authError) throw new Error(authError.message);
+
+    const { error: profileError } = await supabaseAdmin
+      .from("profiles")
+      .update({
+        full_name: data.full_name,
+        email: data.email,
+        designation: data.designation,
+        ...(data.password ? { must_reset_password: true } : {}),
+      })
+      .eq("id", data.id);
+    if (profileError) throw new Error(profileError.message);
+
+    await supabaseAdmin.from("user_roles").delete().eq("user_id", data.id);
+    const { error: roleError } = await supabaseAdmin
+      .from("user_roles")
+      .insert({ user_id: data.id, role: data.designation });
+    if (roleError) throw new Error(roleError.message);
+
+    return { ok: true };
+  });
+
