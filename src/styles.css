@@ -187,3 +187,45 @@
   text-transform: uppercase;
   color: var(--color-muted-foreground);
 }
+
+/* Tier-based themes (Phase 2) — applied via data-tier on the app shell */
+[data-tier="manager"] {
+  --primary: oklch(0.42 0.12 258);
+  --ring: oklch(0.42 0.12 258);
+  --sidebar: oklch(0.24 0.06 258);
+  --sidebar-accent: oklch(0.31 0.07 256);
+  --sidebar-border: oklch(0.31 0.07 256);
+  --sidebar-primary: oklch(0.72 0.1 250);
+  --sidebar-primary-foreground: oklch(0.2 0.05 258);
+}
+
+[data-tier="crm"] {
+  --primary: oklch(0.55 0.11 200);
+  --ring: oklch(0.55 0.11 200);
+  --sidebar: oklch(0.25 0.05 210);
+  --sidebar-accent: oklch(0.32 0.06 205);
+  --sidebar-border: oklch(0.32 0.06 205);
+  --sidebar-primary: oklch(0.78 0.12 195);
+  --sidebar-primary-foreground: oklch(0.22 0.05 205);
+}
+
+[data-tier="team_lead"] {
+  --primary: oklch(0.5 0.15 300);
+  --ring: oklch(0.5 0.15 300);
+  --sidebar: oklch(0.26 0.07 300);
+  --sidebar-accent: oklch(0.33 0.08 300);
+  --sidebar-border: oklch(0.33 0.08 300);
+  --sidebar-primary: oklch(0.76 0.13 305);
+  --sidebar-primary-foreground: oklch(0.22 0.06 300);
+}
+
+[data-tier="agent"] {
+  --primary: oklch(0.62 0.15 62);
+  --primary-foreground: oklch(0.99 0.004 80);
+  --ring: oklch(0.62 0.15 62);
+  --sidebar: oklch(0.26 0.05 60);
+  --sidebar-accent: oklch(0.34 0.06 62);
+  --sidebar-border: oklch(0.34 0.06 62);
+  --sidebar-primary: oklch(0.8 0.15 74);
+  --sidebar-primary-foreground: oklch(0.24 0.05 60);
+}

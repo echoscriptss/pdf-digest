@@ -14,6 +14,160 @@ export type Database = {
   }
   public: {
     Tables: {
+      airport_reference: {
+        Row: {
+          airport_code: string
+          airport_name: string
+          city: string
+          country: string
+          created_at: string
+          id: string
+          is_active: boolean
+          state: string
+          updated_at: string
+        }
+        Insert: {
+          airport_code: string
+          airport_name: string
+          city: string
+          country?: string
+          created_at?: string
+          id?: string
+          is_active?: boolean
+          state: string
+          updated_at?: string
+        }
+        Update: {
+          airport_code?: string
+          airport_name?: string
+          city?: string
+          country?: string
+          created_at?: string
+          id?: string
+          is_active?: boolean
+          state?: string
+          updated_at?: string
+        }
+        Relationships: []
+      }
+      lead_comments: {
+        Row: {
+          comment_text: string
+          created_at: string
+          id: string
+          lead_id: string
+          updated_at: string
+          user_id: string
+        }
+        Insert: {
+          comment_text: string
+          created_at?: string
+          id?: string
+          lead_id: string
+          updated_at?: string
+          user_id: string
+        }
+        Update: {
+          comment_text?: string
+          created_at?: string
+          id?: string
+          lead_id?: string
+          updated_at?: string
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "lead_comments_lead_id_fkey"
+            columns: ["lead_id"]
+            isOneToOne: false
+            referencedRelation: "leads"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "lead_comments_user_id_fkey"
+            columns: ["user_id"]
+            isOneToOne: false
+            referencedRelation: "profiles"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      leads: {
+        Row: {
+          agent_id: string
+          airport_code: string
+          company: string
+          created_at: string
+          crm_id: string | null
+          email: string
+          id: string
+          job_title: string | null
+          linkedin_url: string
+          manager_id: string | null
+          meeting_date: string
+          phone_number: string
+          prospect_name: string
+          status: Database["public"]["Enums"]["lead_status"]
+          updated_at: string
+        }
+        Insert: {
+          agent_id: string
+          airport_code: string
+          company: string
+          created_at?: string
+          crm_id?: string | null
+          email: string
+          id?: string
+          job_title?: string | null
+          linkedin_url: string
+          manager_id?: string | null
+          meeting_date: string
+          phone_number: string
+          prospect_name: string
+          status?: Database["public"]["Enums"]["lead_status"]
+          updated_at?: string
+        }
+        Update: {
+          agent_id?: string
+          airport_code?: string
+          company?: string
+          created_at?: string
+          crm_id?: string | null
+          email?: string
+          id?: string
+          job_title?: string | null
+          linkedin_url?: string
+          manager_id?: string | null
+          meeting_date?: string
+          phone_number?: string
+          prospect_name?: string
+          status?: Database["public"]["Enums"]["lead_status"]
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "leads_agent_id_fkey"
+            columns: ["agent_id"]
+            isOneToOne: false
+            referencedRelation: "profiles"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "leads_crm_id_fkey"
+            columns: ["crm_id"]
+            isOneToOne: false
+            referencedRelation: "profiles"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "leads_manager_id_fkey"
+            columns: ["manager_id"]
+            isOneToOne: false
+            referencedRelation: "profiles"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       profiles: {
         Row: {
           created_at: string
@@ -80,6 +234,7 @@ export type Database = {
     }
     Enums: {
       app_role: "admin" | "manager" | "crm" | "team_lead" | "agent"
+      lead_status: "new" | "contacted" | "qualified" | "closed"
     }
     CompositeTypes: {
       [_ in never]: never
@@ -208,6 +363,7 @@ export const Constants = {
   public: {
     Enums: {
       app_role: ["admin", "manager", "crm", "team_lead", "agent"],
+      lead_status: ["new", "contacted", "qualified", "closed"],
     },
   },
 } as const

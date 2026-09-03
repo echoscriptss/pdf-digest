@@ -53,12 +53,13 @@ export const ROLE_NAV: Record<Designation, NavItem[]> = {
   ],
   agent: [
     { label: "Dashboard", icon: LayoutDashboard },
-    { label: "My Leads", icon: Target, soon: true },
-    { label: "My Tasks", icon: ListChecks, soon: true },
+    { label: "Leads", icon: Target },
+    { label: "Add Lead", icon: ListChecks },
     { label: "Follow-ups", icon: CalendarClock, soon: true },
     { label: "Profile", icon: UserCircle, soon: true },
   ],
 };
+
 
 export const ROLE_PANELS: Record<Designation, { title: string; cards: string[] }> = {
   manager: { title: "Manager Dashboard", cards: ["Team Performance", "Teams / Agents"] },
