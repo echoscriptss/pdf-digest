@@ -178,6 +178,7 @@ export type Database = {
           is_active: boolean
           last_login_at: string | null
           must_reset_password: boolean
+          password_hash: string | null
           updated_at: string
         }
         Insert: {
@@ -185,10 +186,11 @@ export type Database = {
           designation?: Database["public"]["Enums"]["app_role"]
           email: string
           full_name: string
-          id: string
+          id?: string
           is_active?: boolean
           last_login_at?: string | null
           must_reset_password?: boolean
+          password_hash?: string | null
           updated_at?: string
         }
         Update: {
@@ -200,6 +202,7 @@ export type Database = {
           is_active?: boolean
           last_login_at?: string | null
           must_reset_password?: boolean
+          password_hash?: string | null
           updated_at?: string
         }
         Relationships: []
@@ -223,7 +226,15 @@ export type Database = {
           role?: Database["public"]["Enums"]["app_role"]
           user_id?: string
         }
-        Relationships: []
+        Relationships: [
+          {
+            foreignKeyName: "user_roles_user_id_fkey"
+            columns: ["user_id"]
+            isOneToOne: false
+            referencedRelation: "profiles"
+            referencedColumns: ["id"]
+          },
+        ]
       }
     }
     Views: {
